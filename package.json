@@ -1,0 +1,27 @@
+{
+  "name": "@lxch/holst",
+  "version": "1.0.0",
+  "description": "React JS component to create infinite 2d interfaces like Figma or Miro.",
+  "main": "built/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "rm -rf .parcel-cache && npx parcel test/index.html",
+    "build": "npx tsc --outDir built",
+    "publish": "npm publish"
+  },
+  "author": "lxchurbakov",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "parcel": "^2.12.0",
+    "process": "^0.11.10",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}
