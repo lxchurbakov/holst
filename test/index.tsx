@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createRoot } from 'react-dom';
 
-import Holst from '../lib';
+import Holst from '../built';
 import s from './index.module.css';
 
 const app = document.getElementById('app');

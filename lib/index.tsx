@@ -1,7 +1,5 @@
 import React from 'react';
 
-import s from './index.module.css';
-
 const transform = (offset, scale) => 
     `scale(${scale.toFixed(10)}) translate(${offset.x}px, ${offset.y}px)`;
 
@@ -125,8 +123,8 @@ export default ({ canMove, canScale, children }) => {
     }, [canScale]);
 
     return (
-        <div className={s.wrap} ref={wrapRef}>
-            <div className={s.container} ref={containerRef} style={{ transform: transform(offset, scale) }}>
+        <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }} ref={wrapRef}>
+            <div  ref={containerRef} style={{ transformOrigin: '0 0', position: 'absolute', transform: transform(offset, scale) }}>
                 {children}
             </div>
         </div>

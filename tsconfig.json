@@ -3,7 +3,9 @@
         "jsx": "react",
         "esModuleInterop": true,
         "lib": ["es2018", "dom"],
-        "types": ["./types"]
+        "types": ["./types"],
+        "declaration": true,
+        "declarationDir": "built",
     },
     "include": [
         "./lib"

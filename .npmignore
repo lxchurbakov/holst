@@ -1,3 +1,5 @@
 test
 .parcel-cache
 dist
+lib
+types

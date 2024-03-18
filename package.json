@@ -1,5 +1,5 @@
 {
-  "name": "@lxch/holst",
+  "name": "@lxchurbakov/holst",
   "version": "1.0.0",
   "description": "React JS component to create infinite 2d interfaces like Figma or Miro.",
   "main": "built/index.js",
@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "rm -rf .parcel-cache && npx parcel test/index.html",
     "build": "npx tsc --outDir built",
-    "publish": "npm publish"
+    "pub": "npm publish --access public"
   },
   "author": "lxchurbakov",
   "license": "ISC",
