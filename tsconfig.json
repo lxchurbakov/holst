@@ -2,7 +2,8 @@
     "compilerOptions": {
         "jsx": "react",
         "esModuleInterop": true,
-        "lib": ["es2018", "dom"]
+        "lib": ["es2018", "dom"],
+        "types": ["./types"]
     },
     "include": [
         "./lib"

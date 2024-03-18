@@ -8,5 +8,9 @@ const app = document.getElementById('app');
 
 const root = createRoot(app);
 
-root.render(<Holst />);
+root.render(
+    <Holst>
+        <div>Hllow</div>
+    </Holst>
+);
 
