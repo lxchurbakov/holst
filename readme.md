@@ -13,3 +13,9 @@ import Holst from '@lxchurbakov/holst';
 
 <Holst />
 ```
+
+## Future
+
+- [ ] Add touch gestures handling
+- [ ] Add github pages with examples
+- [ ] Add CI version building
