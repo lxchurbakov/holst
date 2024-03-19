@@ -10,7 +10,7 @@ const app = document.getElementById('app');
 const root = createRoot(app);
 
 root.render(
-    <Holst canMove canScale={true}>
+    <Holst can={['scale', 'move']} options={{ scale: {max: 10} }}>
         <div className={s.block}>
             <div className={s.text}>Some Text comes here</div>
         </div>

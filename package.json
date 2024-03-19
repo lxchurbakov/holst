@@ -1,6 +1,6 @@
 {
   "name": "@lxchurbakov/holst",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "React JS component to create infinite 2d interfaces like Figma or Miro.",
   "main": "built/index.js",
   "directories": {

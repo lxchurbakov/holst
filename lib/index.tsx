@@ -1,13 +1,26 @@
 import React from 'react';
 
-import { add, div, sub, Point, debounce } from './utils';
+import { add, div, sub, Point, debounce, useObjectField, ValueTuple, merge } from './utils';
 
 const transform = (offset, scale) => 
     `scale(${scale.toFixed(10)}) translate(${offset.x}px, ${offset.y}px)`;
 
-export default ({ canMove, canScale, children }) => {
-    const [scale, setScale] = React.useState(1);
-    const [offset, setOffset] = React.useState({ x: 0, y: 0 } as Point);
+export type State = { offset: Point, scale: number };
+export type Options = { scale?: { max?: number, min?: number } };
+
+const DEFAULT_OPTIONS = {
+    scale: {
+        min: .2,
+        max: 2,
+    },
+};
+
+export default ({ can, state$, options, children }: React.PropsWithChildren<{ can: string[], state$?: ValueTuple<State>, options?: Options }>) => {
+    const opts = React.useMemo(() => merge(options, DEFAULT_OPTIONS) as typeof DEFAULT_OPTIONS, [options]);
+
+    const [value, onChange] = state$ || React.useState({ offset: { x: 0, y: 0 }, scale: 1 });
+    const [scale, setScale] = useObjectField([value, onChange], 'scale', 1);
+    const [offset, setOffset] = useObjectField([value, onChange], 'offset', { x: 0, y: 0 } as Point);
 
     const wrapRef = React.useRef(null);
     const containerRef = React.useRef(null);
@@ -44,14 +57,14 @@ export default ({ canMove, canScale, children }) => {
             window.addEventListener('mouseup', mouseup);
         };
         
-        if (canMove) {
+        if (can.includes('move')) {
             wrap.addEventListener('mousedown', mousedown);
         }
 
         return () => {
             wrap.removeEventListener('mousedown', mousedown);
         };
-    }, [canMove, offset, scale]);
+    }, [opts, can, offset, scale]);
 
     /* Scale effect */
 
@@ -66,10 +79,12 @@ export default ({ canMove, canScale, children }) => {
         let currentoffset = offset;
         let currentscale = scale;
 
-        const updateDebounced = debounce(() => {
+        const update = () => {
             setOffset(currentoffset);
             setScale(currentscale);
-        }, 50);
+        };
+
+        const updateDebounced = debounce(update, 50);
         
         const handler = (e) => {
             e.preventDefault();
@@ -77,7 +92,7 @@ export default ({ canMove, canScale, children }) => {
             const rawchange = -e.deltaY / 100;
             const oldscale = currentscale;
 
-            currentscale = Math.min(2, Math.max(.2, oldscale + rawchange));
+            currentscale = Math.min(opts.scale.max, Math.max(opts.scale.min, oldscale + rawchange));
             const change = currentscale - oldscale;
             
             currentoffset.x = currentoffset.x - change * (e.clientX / (currentscale * oldscale));
@@ -88,14 +103,15 @@ export default ({ canMove, canScale, children }) => {
             updateDebounced();
         };
 
-        if (canScale) {
+        if (can.includes('scale')) {
             wrap.addEventListener('mousewheel', handler);
         }
 
         return () => {
             wrap.removeEventListener('mousewheel', handler);
+            // update();
         };
-    }, [canScale, offset, scale]);
+    }, [opts, can, offset, scale]);
 
     return (
         <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }} ref={wrapRef}>
